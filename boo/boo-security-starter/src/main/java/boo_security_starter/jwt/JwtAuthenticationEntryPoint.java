@@ -1,5 +1,7 @@
 package boo_security_starter.jwt;
 
+import boo_share.common.response.ApiResponseCode;
+import boo_share.common.response.ApiResponseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,21 +20,6 @@ public class JwtAuthenticationEntryPoint
 
     private final ObjectMapper objectMapper;
 
-//    @Override
-//    public void commence(
-//            HttpServletRequest request,
-//            HttpServletResponse response,
-//            AuthenticationException ex
-//    ) throws IOException {
-//
-//        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//        response.setContentType("application/json");
-//
-//        objectMapper.writeValue(
-//                response.getOutputStream(),
-//                ApiResponseUtil.error(ApiResponseCode.UNAUTHORIZED)
-//        );
-//    }
     @Override
     public void commence(
             HttpServletRequest request,
@@ -43,12 +30,11 @@ public class JwtAuthenticationEntryPoint
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
 
-        Map<String, Object> body = Map.of(
-                "code", "UNAUTHORIZED",
-                "message", "Authentication required"
+        objectMapper.writeValue(
+                response.getOutputStream(),
+                ApiResponseUtil.error(ApiResponseCode.UNAUTHORIZED)
         );
-
-        objectMapper.writeValue(response.getOutputStream(), body);
     }
+
 
 }

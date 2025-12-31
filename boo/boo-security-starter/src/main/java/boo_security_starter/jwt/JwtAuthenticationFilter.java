@@ -26,14 +26,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final AntPathMatcher pathMatcher = new AntPathMatcher();
 
-//    @Override
-//    protected boolean shouldNotFilter(HttpServletRequest request) {
-//        String path = request.getRequestURI();
-//
-//        return securityProperties.getPublicUrls()
-//                .stream()
-//                .anyMatch(pattern -> pathMatcher.match(pattern, path));
-//    }
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();

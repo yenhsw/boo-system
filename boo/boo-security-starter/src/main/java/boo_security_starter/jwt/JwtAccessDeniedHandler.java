@@ -1,5 +1,7 @@
 package boo_security_starter.jwt;
 
+import boo_share.common.response.ApiResponseCode;
+import boo_share.common.response.ApiResponseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,21 +20,6 @@ public class JwtAccessDeniedHandler
 
     private final ObjectMapper objectMapper;
 
-//    @Override
-//    public void handle(
-//            HttpServletRequest request,
-//            HttpServletResponse response,
-//            AccessDeniedException ex
-//    ) throws IOException {
-//
-//        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//        response.setContentType("application/json");
-//
-//        objectMapper.writeValue(
-//                response.getOutputStream(),
-//                ApiResponseUtil.error(ApiResponseCode.FORBIDDEN)
-//        );
-//    }
     @Override
     public void handle(
             HttpServletRequest request,
@@ -43,12 +30,10 @@ public class JwtAccessDeniedHandler
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setContentType("application/json");
 
-        Map<String, Object> body = Map.of(
-                "code", "FORBIDDEN",
-                "message", "Access is denied"
+        objectMapper.writeValue(
+                response.getOutputStream(),
+                ApiResponseUtil.error(ApiResponseCode.FORBIDDEN)
         );
-
-        objectMapper.writeValue(response.getOutputStream(), body);
     }
 
 }
